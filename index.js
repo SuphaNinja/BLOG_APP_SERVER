@@ -95,18 +95,18 @@ app.post("/login", async (req,res) => {
         where: { email: loginData.email }
     });
 
-    if (!user) { return res.send({ error: "Password or email is incorrect!"}) };
+    if (!user) { return res.status(404).send({ error: "Password or email is incorrect!"}) };
 
     const passwordValid = await bcrypt.compare(loginData.password, user.password);
 
     if (!passwordValid) {
-        res.send({ error: "Password or email is incorrect!"});
+        res.status(404).send({ error: "Password or email is incorrect!"});
         return;
     };
 
     const { password, ...userWithoutPass } = user;
 
-    res.send({
+    res.status(200).send({
         token: jwt.sign({ userId: user.id}, process.env.SECRET_KEY, {expiresIn: "5h"}),
         userWithoutPass
     });
