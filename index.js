@@ -39,7 +39,7 @@ const verifyToken = (req, res, next) => {
 
 
 app.get("/test", async (req,res) => {
-    return "hello it is working"
+    return res.status(200).send("test")
 });
 
 //---------------------------------------CREATE NEW USER---------------------------------------------------------
