@@ -88,8 +88,8 @@ app.post("/create-new-user", async ( req, res) => {
 app.post("/login", async (req,res) => {
     const loginData = req.body;
 
-    if (!loginData.email) { return res.send({ error: "Email field cannot be left empty!" })};
-    if (!loginData.password) { return res.send({ error: "Password field cannot be left empty!" })};
+    if (!loginData.email) { return res.status(404).send({ error: "Email field cannot be left empty!" })};
+    if (!loginData.password) { return res.status(404).send({ error: "Password field cannot be left empty!" })};
 
     const user = await prisma.user.findUnique({
         where: { email: loginData.email }
