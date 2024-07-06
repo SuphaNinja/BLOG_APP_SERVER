@@ -90,6 +90,9 @@ app.post("/login", async (req,res) => {
 
     if (!loginData.email) { return res.status(404).send({ error: "Email field cannot be left empty!" })};
     if (!loginData.password) { return res.status(404).send({ error: "Password field cannot be left empty!" })};
+    res.setHeader('Access-Control-Allow-Origin', 'https://blog-app-client-blue.vercel.app');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
     const user = await prisma.user.findUnique({
         where: { email: loginData.email }
