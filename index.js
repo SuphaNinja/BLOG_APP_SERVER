@@ -202,7 +202,7 @@ app.post("/get-user", verifyToken, async (req,res) => {
             res.status(200).send({ user });
         } else {
             const { password, ...userWithoutPass } = user;
-            res.send({ user: userWithoutPass });
+            res.status(200).send({ user: userWithoutPass });
         };
     } catch (error) {
         console.log("Error getting profile with userId", error);
