@@ -38,6 +38,10 @@ const verifyToken = (req, res, next) => {
 };
 
 
+app.get("/test", async (req,res) => {
+    return "hello it is working"
+});
+
 //---------------------------------------CREATE NEW USER---------------------------------------------------------
 
 app.post("/create-new-user", async ( req, res) => {
