@@ -32,7 +32,7 @@ const verifyToken = (req, res, next) => {
 
     jwt.verify(token, process.env.SECRET_KEY, (error, decoded) => {
         if (error) {
-            res.send({error: "Your session has expired or does not exist!"});
+            res.send({error: "Your session has expired or does not exist!!"});
             return;
         } else {
             req.userId = decoded.userId;
