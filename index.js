@@ -538,7 +538,7 @@ app.post("/comment-post", verifyToken, async (req, res) => {
             where: { id: userId },
         });  
 
-        if (!requester) { return res..status(404) send({error: "User not found!"}) };
+        if (!requester) { return res.status(404).send({error: "User not found!"}) };
 
         await prisma.comment.create({
             data: {
