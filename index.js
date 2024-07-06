@@ -10,8 +10,14 @@ const fs = require('fs');
 const app = express();
 const prisma = new PrismaClient();
 
+const corsOptions = {
+    origin: 'https://blog-app-client-blue.vercel.app/', 
+    methods: ['GET', 'POST'], 
+    credentials: true,
+};
 
 app.use(express.json());
+app.use(cors(corsOptions));
 app.use(fileUpload());
 app.use("/images", express.static(__dirname + "/images"));
 
