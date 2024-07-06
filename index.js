@@ -21,11 +21,7 @@ const app = express();
 
 
 app.use(express.json());
-app.use(cors({
-    origin: 'https://blog-app-client-blue.vercel.app',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(cors());
 app.use(fileUpload());
 app.use("/images", express.static(__dirname + "/images"));
 
