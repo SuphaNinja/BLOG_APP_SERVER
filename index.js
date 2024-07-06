@@ -6,9 +6,19 @@ const path = require("path");
 const jwt = require("jsonwebtoken");
 const fileUpload = require("express-fileupload");
 const fs = require('fs');
+const { PrismaLibSQL } = require("@prisma/adapter-libsql");
+const { createClient } = require("@libsql/client");
 
+
+const libsql = createClient({
+    url: process.env.TURSO_DATABASE_URL,
+    authToken: process.env.TURSO_AUTH_TOKEN,
+});
+
+const adapter = new PrismaLibSQL(libsql);
+const prisma = new PrismaClient({ adapter });
 const app = express();
-const prisma = new PrismaClient();
+
 
 const whitelist = ["https://blog-app-client-blue.vercel.app", "https://blog-app-server-five.vercel.app"]
 
