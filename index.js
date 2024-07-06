@@ -17,7 +17,7 @@ const corsOptions = {
 };
 
 app.use(express.json());
-app.use(cors({ origin: true, credentials: true  }));
+app.use(cors({ origin: ["https://blog-app-client-blue.vercel.app", "https://blog-app-server-sable.vercel.app"], credentials: true  }));
 app.use(fileUpload());
 app.use("/images", express.static(__dirname + "/images"));
 
