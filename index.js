@@ -10,6 +10,20 @@ const fs = require('fs');
 const app = express();
 const prisma = new PrismaClient();
 
+const whitelist = ["https://blog-app-client-blue.vercel.app", "http://localhost:5173"]
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    },
+    methods: ['GET', 'PUT', 'POST', "OPTIONS", "DELETE", "PATCH"],
+    credentials: true
+}
+
 app.use(express.json());
 app.use(cors({ origin: ["https://blog-app-client-blue.vercel.app", "https://blog-app-server-sable.vercel.app"],}));
 app.set('trust proxy', 1);
