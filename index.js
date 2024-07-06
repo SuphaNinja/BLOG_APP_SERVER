@@ -10,8 +10,6 @@ const fs = require('fs');
 const app = express();
 const prisma = new PrismaClient();
 
-
-
 app.use(express.json());
 app.use(cors({ origin: ["https://blog-app-client-blue.vercel.app", "https://blog-app-server-sable.vercel.app"],}));
 app.set('trust proxy', 1);
@@ -44,17 +42,17 @@ app.get("/test", async (req,res) => {
 app.post("/create-new-user", async ( req, res) => {
     const signUpData = req.body;
    
-    if (!signUpData.firstName) { return res.send({ error: "First name field cannot be left empty!"}) };
-    if (!signUpData.lastName) { return res.send({ error: "last name field cannot be left empty!" }) };
-    if (!signUpData.userName) { return res.send({ error: "Username field cannot be left empty!" }) };
-    if (!signUpData.email) { return res.send({ error: "Email field cannot be left empty!" }) };
-    if (!signUpData.password) { return res.send({ error: "First name field cannot be left empty!" }) };
+    if (!signUpData.firstName) { return res.status(404).send({ error: "First name field cannot be left empty!"}) };
+    if (!signUpData.lastName) { return res.status(404).send({ error: "last name field cannot be left empty!" }) };
+    if (!signUpData.userName) { return res.status(404).send({ error: "Username field cannot be left empty!" }) };
+    if (!signUpData.email) { return res.status(404).send({ error: "Email field cannot be left empty!" }) };
+    if (!signUpData.password) { return res.status(404).send({ error: "First name field cannot be left empty!" }) };
 
     const foundUser = await prisma.user.findUnique({
         where: { email: signUpData.email }
     });
 
-    if (foundUser) { return res.send({ error: "Email is already in use!" }) };
+    if (foundUser) { return res.status(404).send({ error: "Email is already in use!" }) };
 
     const adminKey = process.env.ADMIN_KEY;
     const hashedPassword = bcrypt.hashSync(signUpData.password, 10);
@@ -71,7 +69,7 @@ app.post("/create-new-user", async ( req, res) => {
             }
         });
 
-        res.send({ success: "Created User: " + createdUser.userName + "successfully!"});
+        res.status(200).send({ success: "Created User: " + createdUser.userName + "successfully!"});
 
     } catch(error) {
         console.log(error);
@@ -131,10 +129,10 @@ app.get("/get-current-user", verifyToken, async (req,res) => {
 
             }
         });
-        if (!user) { return res.send({error: "User could not be found!"}) };
+        if (!user) { return res.status(404).send({error: "User could not be found!"}) };
 
         const { password, ...userWithoutPass } = user;
-        res.send({success: userWithoutPass});
+        res.status(200).send({success: userWithoutPass});
 
     } catch (error) {
         console.log("Error getting current user :", error);
@@ -153,7 +151,7 @@ app.post("/edit-profile", verifyToken, async (req, res) => {
             where: { email: updateData.email}
         });
         
-        if (!user) { return res.send({ error: "User not found!" }) };
+        if (!user) { return res.status(404).send({ error: "User not found!" }) };
 
         let hashedPassword;
         if (user.password !== updateData.password) {
@@ -172,7 +170,7 @@ app.post("/edit-profile", verifyToken, async (req, res) => {
             }
         });
 
-        res.send({success: "Profile has been updated!"});
+        res.status(200).send({success: "Profile has been updated!"});
 
     } catch (error) {
         console.log("Error updating profile :", error);
