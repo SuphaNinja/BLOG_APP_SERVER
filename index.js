@@ -20,22 +20,8 @@ const prisma = new PrismaClient({ adapter });
 const app = express();
 
 
-const whitelist = ["https://blog-app-client-blue.vercel.app", "https://blog-app-server-five.vercel.app"]
-
-const corsOptions = {
-    origin: function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
-    },
-    methods: ['GET', 'PUT', 'POST', "OPTIONS", "DELETE", "PATCH"],
-    credentials: true
-}
-
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors());
 app.set('trust proxy', 1);
 app.use(fileUpload());
 app.use("/images", express.static(__dirname + "/images"));
