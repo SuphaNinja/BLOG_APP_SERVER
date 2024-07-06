@@ -174,7 +174,7 @@ app.post("/edit-profile", verifyToken, async (req, res) => {
 
     } catch (error) {
         console.log("Error updating profile :", error);
-        res.send({ error: "Something went wrong, try again later!" })
+        res.status(404).send({ error: "Something went wrong, try again later!" })
         return;
     }
 });
@@ -199,7 +199,7 @@ app.post("/get-user", verifyToken, async (req,res) => {
         });
 
         if (userId === profileUserId.params.userId) {
-            res.send({ user });
+            res.status(200).send({ user });
         } else {
             const { password, ...userWithoutPass } = user;
             res.send({ user: userWithoutPass });
