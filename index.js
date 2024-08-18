@@ -130,7 +130,7 @@ app.get("/get-current-user", verifyToken, async (req,res) => {
                 comments: true,
                 likes: true,
                 notifications: {
-                     orderBy: [
+                    orderBy: [
                         { read: 'asc' },
                         { created_at: 'desc' } 
                     ]
@@ -313,7 +313,7 @@ app.get("/get-posts", async ( req, res ) => {
     }
 });
 
-//---------------------------------------GET POST BY ID---------------------------------------------------------
+//-------------------------------------GET POST BY ID---------------------------------------------------------
 
 app.post("/get-post", async (req,res) => {
     const { postId } = req.body;
