@@ -344,7 +344,7 @@ app.post("/get-post", async (req,res) => {
             user: userWithoutPassword
         };
 
-        res.status(404).send({ post: modifiedPost });
+        res.status(200).send({ post: modifiedPost });
 
     } catch (error) {
         console.log("error getting post by id: ", error);
