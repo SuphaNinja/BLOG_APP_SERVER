@@ -316,10 +316,10 @@ app.get("/get-posts", async ( req, res ) => {
 //-------------------------------------GET POST BY ID---------------------------------------------------------
 
 app.post("/get-post", async (req,res) => {
-    const { postId } = req.body;
+    const  postId  = req.body;
 
     try {
-        if (!postId) { return res.status(404).send({error: "Post Id is undefined. Cannot get post!"}) };
+        if (!postId) { return res.status(404).send({error: "Post Id is undefined. Can't get post!"}) };
         const post = await prisma.post.findUnique({
             where: {id: postId},
             include: {
@@ -328,8 +328,8 @@ app.post("/get-post", async (req,res) => {
                     orderBy: {created_at: "desc"},
                     include: { user: true, likes:true }
                 },
-                likes:true,
-                image:true
+                likes: true,
+                image: true
             }
         });
 
