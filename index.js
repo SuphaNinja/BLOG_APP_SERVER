@@ -316,7 +316,7 @@ app.get("/get-posts", async ( req, res ) => {
 //-------------------------------------GET POST BY ID---------------------------------------------------------
 
 app.post("/get-post", async (req,res) => {
-    const  postId  = req.body;
+    const { postId } = req.body;
 
     try {
         if (!postId) { return res.status(404).send({error: "Post Id is undefined. Can't get post!"}) };
